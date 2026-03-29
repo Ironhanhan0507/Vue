@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内置指令</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- v-text 指令:向其所在节点填充文本内容，会覆盖节点内原有的内容 -->
+    <!-- v-html 指令:向其所在节点填充 HTML 内容，会覆盖节点内原有的内容 容易造成 XSS 攻击 -->
+    <!-- v-cloak 指令:用于隐藏未编译的标签直到实例准备完毕 -->
+    <!-- v-once 指令:用于渲染一次，之后不再响应数据变化 -->
+    <!-- v-pre 指令:用于显示原始标签 跳过编译无指令语法无插值语法 -->
+    <div id="root">
+        <div>{{ msg }}</div>
+        <div v-text="msg"></div>
+        <div v-html="str"></div>
+        <h2 v-cloak>{{ name }}</h2>
+        <p>当前的数值是：{{ num }}</p>
+        <p v-once>初始的数值是：{{ num }}</p>
+        <button @click="num++">num+1</button>
+        <p v-pre>Vue</p>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    msg: 'Hello, Vue.js!',
+                    str: '<h3>Hello, Vue.js!</h3>',
+                    name: 'Jack',
+                    num: "1"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

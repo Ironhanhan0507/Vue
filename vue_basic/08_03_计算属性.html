@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 总结: 计算属性是Vue.js中一个非常有用的功能，它可以基于响应式数据计算出新的值，并且会自动进行缓存，只有在依赖的数据发生变化时才会重新计算 -->
+    <!-- 计算属性的getter方法会在访问计算属性时被调用，返回计算属性的值。计算属性的setter方法会在设置计算属性的值时被调用，可以用来更新相关的数据属性。 -->
+    <!-- 计算属性的优势在于它们具有缓存功能，只有在依赖的数据发生变化时才会重新计算，这使得计算属性非常高效，适合用于需要进行复杂计算的场景。相比于在模板中直接进行计算，使用计算属性可以使代码更加清晰和易于维护。 -->
+
+
+    <!-- 计算属性实现 -->
+    <div id="root">
+        姓2：<input type="text" v-model="firstName"><br><br>
+        名2：<input type="text" v-model="lastName"><br><br>
+        全名2：<span>{{ fullname }}</span>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#root",
+            data() {
+                return {
+                    firstName: 'John',
+                    lastName: 'Doe'
+                }
+            },
+            computed: {
+                // 计算属性fullname，具有getter和setter方法
+                fullname: {
+                    // getter方法：返回计算属性的值 当有人读取fullname时会调用这个方法 
+                    // 1.初次读取 2.依赖的firstName或lastName发生变化时会重新计算并更新fullname的值
+                    get() {
+                        return this.firstName + ' ' + this.lastName;
+                    },
+                    // setter方法：当有人设置fullname的值时会调用这个方法
+                    // 通过setter方法，我们可以将fullname的值拆分成firstName和lastName，并更新它们的值
+                    set(value) {
+                        const names = value.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[1];
+                    }
+                }
+                // 计算属性fullname的简写形式 只有读取没有修改时才能用
+                // fullname() {
+                //     return this.firstName + ' ' + this.lastName; 
+                // }
+
+            }
+        })
+    </script>
+</body>
+</html>

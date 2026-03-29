@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVVM</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- MVVM模型
+    Model: 数据模型，Vue实例中的data对象就是数据模型，包含了Vue实例的响应式数据属性。
+    View: 视图，Vue实例中的模板部分，包含了HTML结构和Vue的  模板语法，用于展示数据模型中的数据。
+    ViewModel: 视图模型，Vue实例本身就是视图模型，负责连接数据模型和视图，处理数据的变化并更新视图，同时也处理用户的交互事件。 
+    -->
+    <div id="root">
+        <h1>名称：{{ name }}</h1>
+        <h1>地址：{{ address }}</h1>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+
+        const app = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: 'Jack',
+                    address: '北京'
+                }
+            }
+        });
+        // 通过Vue实例访问数据属性
+        console.log(app.name); // 输出: Jack
+        console.log(app.address); // 输出: 北京
+    </script>
+</body>
+</html>

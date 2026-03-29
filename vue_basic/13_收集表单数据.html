@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收集表单数据</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <form>
+            <!-- 使用 .trim 修饰符去除输入的首尾空格 -->
+            <!-- 使用 .number 修饰符输入的值为数字 -->
+            账号：<input type="text" placeholder="请输入账号" v-model.trim.number="username"><br><br>
+            密码：<input type="password" placeholder="请输入密码" v-model="password"><br><br>
+            性别：
+            <!-- v-model收集的是value值 -->
+            <input type="radio" name="sex" value="male" v-model="sex"> 男
+            <input type="radio" name="sex" value="female" v-model="sex"> 女
+            <br><br>
+            爱好：
+            <!-- v-model收集的是value值 且要配置成数组 -->
+            <input type="checkbox" value="篮球" v-model="hobby"> 篮球
+            <input type="checkbox" value="足球" v-model="hobby"> 足球
+            <input type="checkbox" value="乒乓球" v-model="hobby"> 乒乓球
+            <br><br>
+            省份：<select v-model="province">
+                <option value="北京市">北京市</option>
+                <option value="上海市">上海市</option>
+                <option value="广州市">广州市</option>
+                <option value="深圳市">深圳市</option>
+            </select>
+            <br><br>
+            <!-- 使用 .lazy 修饰符延迟更新 -->
+            其他信息：<textarea placeholder="请输入其他信息" v-model.lazy="otherInfo"></textarea>
+            <br><br>
+            <input type="checkbox" v-model="agreed" value="aggreed">
+            阅读并接受<a href="#">用户协议</a>
+            <br><br>
+            <button type="submit" @click.prevent="submitForm">提交</button>
+        </form>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    // 账号
+                    username: '',
+                    // 密码
+                    password: '',
+                    // 性别
+                    sex: '',
+                    // 爱好
+                    hobby: [],
+                    // 省份
+                    province: '',
+                    // 其他信息
+                    otherInfo: '',
+                    // 是否同意用户协议
+                    agreed: ""
+                }
+            },
+            methods: {
+                submitForm(e) {
+                    console.log('账号：', this.username);
+                    console.log('密码：', this.password);
+                    console.log('性别：', this.sex);
+                    console.log('爱好：', this.hobby);
+                    console.log('省份：', this.province);
+                    console.log('其他信息：', this.otherInfo);
+                    console.log('是否同意用户协议：', this.agreed);
+                }
+            }
+
+        });
+
+    </script>
+</body>
+</html>

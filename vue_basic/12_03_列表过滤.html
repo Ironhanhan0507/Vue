@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表过滤</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <input type="text" v-model="keywords" placeholder="请输入查询内容">
+        <ul>
+            <li v-for="(item, index) in filterList" :key="item.id">
+                {{ item.name }}-{{ item.age }}-{{ item.sex }}
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        // 用watch监听keywords的变化，当keywords发生变化时，过滤list中的数据，得到filterList
+        // const vm = new Vue({
+        //     el: '#root',
+        //     data: {
+        //         list: [
+        //             { name: '马冬梅', id: 1, age: "19", sex: "女" },
+        //             { name: '周冬雨', id: 2, age: "20", sex: "女" },
+        //             { name: '周杰伦', id: 3, age: "21", sex: "男" },
+        //             { name: '温兆伦', id: 4, age: "22", sex: "男" },
+        //         ],
+        //         keywords: '',
+        //         filterList: []
+        //     },
+        //     watch: {
+        //         keywords: {
+        //             handler(newVal) {
+        //                 this.filterList = this.list.filter(item => item.name.includes(newVal));
+        //             },
+        //             immediate: true
+        //         }
+        //     }
+        // })
+
+        // 用computed计算属性来过滤list中的数据，得到filterList
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                list: [
+                    { name: '马冬梅', id: 1, age: "19", sex: "女" },
+                    { name: '周冬雨', id: 2, age: "20", sex: "女" },
+                    { name: '周杰伦', id: 3, age: "21", sex: "男" },
+                    { name: '温兆伦', id: 4, age: "22", sex: "男" },
+                ],
+                keywords: ''
+            },
+            computed: {
+                filterList() {
+                    return this.list.filter(item => item.name.includes(this.keywords));
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

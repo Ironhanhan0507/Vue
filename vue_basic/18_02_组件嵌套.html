@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件嵌套</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 第三步：在Vue实例的模板中使用组件(已交给app组件) -->
+        <!-- <app></app> -->
+    </div>
+
+    <script>
+        // 创建student组件作为school组件的子组件 简写形式
+        const student = {
+            data() {
+                return {
+                    studentName: '李四',
+                    age: 25
+                }
+            },
+            template: `
+                    <div>
+                        <h2>学生名称：{{ studentName }}</h2>
+                        <h2>年龄：{{ age }}</h2>
+                    </div>
+                `
+        }
+        // 创建school组件
+        const school = Vue.extend({
+            data() {
+                return {
+                    schoolName: '清华大学',
+                    address: '北京市朝阳区'
+                }
+            },
+            template: `
+                    <div>
+                        <h2>学校名称：{{ schoolName }}</h2>
+                        <h2>地址：{{ address }}</h2>
+                        <button @click="show">点我显示学校名称</button>
+                        <!-- 组件嵌套 -->
+                        <student></student>
+                    </div>
+                `,
+            methods: {
+                show() {
+                    alert(this.schoolName);
+                }
+            },
+            // 组件嵌套，student组件被school组件使用了，所以student组件要在school中注册，才能在school组件中使用
+            components: {
+                student
+            }
+        });
+
+        // 创建hello组件
+        const hello = {
+            data() {
+                return {
+                    message: 'Hello, Vue.js!'
+                }
+            },
+            template: `
+                    <div>
+                        <h2>{{ message }}</h2>
+                    </div>
+                `
+        }
+
+        // 创建app组件 把所有创建的组件都注册到app组件中，app组件就可以使用这些组件了
+        // app组件作为根组件，所有的组件都在app组件中使用了，所以app组件要在Vue实例中注册，才能在Vue实例的模板中使用app组件
+        const app = {
+            template: `
+                    <div>
+                        <school></school>
+                        <hello></hello>
+                    </div>
+                `,
+            components: {
+                school,
+                hello,
+            }
+        }
+
+        const vm = new Vue({
+            template: `
+                <div>
+                    <app></app>
+                </div>
+            `,
+            el: '#root',
+            components: {
+                app
+            }
+        }); 
+    </script>
+</body>
+</html>

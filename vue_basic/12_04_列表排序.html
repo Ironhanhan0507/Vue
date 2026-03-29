@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表排序</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <input type="text" v-model="keywords" placeholder="请输入查询内容">
+        <button @click="sortType = '2'">年龄升序</button>
+        <button @click="sortType = '1'">年龄降序</button>
+        <button @click="sortType = '0'">原顺序</button>
+        <ul>
+            <li v-for="(item, index) in filterList" :key="item.id">
+                {{ item.name }}-{{ item.age }}-{{ item.sex }}
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                list: [
+                    { name: '马冬梅', id: 1, age: "30", sex: "女" },
+                    { name: '周冬雨', id: 2, age: "31", sex: "女" },
+                    { name: '周杰伦', id: 3, age: "18", sex: "男" },
+                    { name: '温兆伦', id: 4, age: "19", sex: "男" },
+                ],
+                keywords: '',
+                sortType: "0" // 0:原顺序 1:年龄降序 2:年龄升序
+            },
+            computed: {
+                filterList() {
+                    // 先过滤，再排序
+                    const arr = this.list.filter(item => item.name.includes(this.keywords));
+                    if (this.sortType === "1") {
+                        return arr.sort((a, b) => b.age - a.age);
+                    } else if (this.sortType === "2") {
+                        return arr.sort((a, b) => a.age - b.age);
+                    } else {
+                        return arr;
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

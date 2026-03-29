@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初识Vue</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <!-- 这里是Vue的模板 -->
+        <h1>{{ message }}</h1>
+        <p>hello world aaa bbb</p>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        const app = new Vue({
+            el: '#root', // 绑定元素 id为root的元素,值通常为一个CSS选择器。
+            data: { // 数据对象,Vue实例的数据对象,包含了Vue实例的响应式数据属性。值 '通常' 是一个对象,其中的属性会被Vue实例代理到根实例上。
+                message: 'Hello Vue!'
+            }
+        });
+    </script>
+</body>
+</html>

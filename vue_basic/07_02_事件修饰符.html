@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件修饰符</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        * {
+            margin-top: 20px;
+        }
+
+        .demo1 {
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+
+        .box1 {
+            padding: 5px;
+            background-color: skyblue;
+        }
+
+        .box2 {
+            padding: 5px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h1>你好，{{ name }}</h1>
+        <!-- 事件修饰符 -->
+        <!-- .prevent：事件修饰符阻止默认行为 -->
+        <a href="https://www.baidu.com" target="_blank" @click.prevent="handleClick1">点击我提示信息1</a>
+
+        <!-- .stop：事件修饰符阻止事件冒泡 -->
+        <div class="demo1" @click="handleClick2">
+            <button @click.stop="handleClick2">点击我提示信息2</button>
+        </div>
+
+        <!-- .once：事件修饰符只触发一次 -->
+        <button @click.once="handleClick3">点击我提示信息3</button>
+
+        <!-- .capture：事件修饰符捕获阶段触发 先捕获再冒泡 -->
+        <div class="box1" @click.capture="handleClick4(1)">
+            div
+            <div class="box2" @click="handleClick4(2)">
+                div
+            </div>
+        </div>
+
+        <!-- .self：事件修饰符只在事件从自身触发时才执行 -->
+        <!-- div不是自身触发 -->
+        <div class="demo1" @click.self="handleClick5">
+            <button @click="handleClick5">点击我提示信息5</button>
+        </div>
+
+        <!-- .passive：事件修饰符表示事件的默认行为立即执行不用等方法回调完毕 -->
+    </div>
+
+
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: 'Vue',
+                }
+            },
+            methods: {
+                handleClick1(e) {
+                    e.preventDefault(); // 阻止默认行为
+                    alert('按钮1被点击了！');
+                },
+                handleClick2(e) {
+                    e.stoppPropagation(); // 阻止事件冒泡
+                    alert('按钮2被点击了！');
+                },
+                handleClick3(e) {
+                    alert('按钮3被点击了！');
+                },
+                handleClick4(msg) {
+                    console.log(msg);
+                },
+                handleClick5(e) {
+                    alert('按钮5被点击了！');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

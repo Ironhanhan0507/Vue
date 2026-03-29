@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监视属性</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>{{ city }}的天气是{{ info }}</h1>
+        <button @click="changeWeather">切换天气</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    city: '北京',
+                    isRain: false
+                }
+            },
+            computed: {
+                info() {
+                    return this.isRain ? '下雨' : '晴天';
+                }
+            },
+            methods: {
+                changeWeather() {
+                    this.isRain = !this.isRain;
+                }
+            },
+            // 监听属性变化
+            //     watch: {
+            //         isRain: {
+            //             immediate: true, // 立即执行一次handler函数 
+            //             // 监听isRain属性的变化
+            //             handler(newVal, oldVal) {
+            //                 console.log('天气发生了变化！', newVal, oldVal);
+            //             }
+            //         }
+            //     }
+        })
+        // 使用$watch方法监听属性变化
+        vm.$watch('isRain', {
+            immediate: true,
+            handler(newVal, oldVal) {
+                console.log('天气发生了变化！', newVal, oldVal);
+            }
+        }) // 立即执行一次handler函数
+    </script>
+</body>
+</html>

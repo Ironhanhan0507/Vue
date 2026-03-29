@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>条件渲染</h1>
+        <!-- v-if 中间不允许打断 -->
+        <p v-if="isShow===1">Angular</p>
+        <p v-else-if="isShow===2">React</p>
+        <p v-else-if="isShow===3">Vue</p>
+        <p v-else>隐藏</p>
+        <p>当前的 isShow 值是: {{ isShow }}</p>
+        <button @click="isShow++">切换</button>
+
+        <!-- v-show -->
+        <!-- <p v-show="isShow">显示</p> -->
+
+        <!-- template标签不影响dom结构 只能和v-if一起使用 -->
+        <template v-if="n===1">
+            <h2>Angular</h2>
+            <h2>React</h2>
+            <h2>Vue</h2>
+        </template>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                isShow: 0,
+                n: 1
+            }
+        })
+    </script>
+</body>
+</html>

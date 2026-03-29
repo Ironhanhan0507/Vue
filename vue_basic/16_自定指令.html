@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义指令</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>当前的值是<span v-text="n"></span></h2>
+        <h2>放大的值是<span v-big="n"></span></h2>
+        <button @click="n++">n+1</button><br>
+        <input type="text" v-fbind:value="n">
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    n: 10
+                }
+            },
+            directives: {
+                // 函数式指令
+                // 接受两个参数：el指令绑定的DOM元素，binding指令对象
+                // 指令对象包含以下属性：name（指令名，不带v-前缀）、value（指令的绑定值 此例中为 'n' ）、oldValue（指令绑定的前一个值，仅在update和componentUpdated钩子中可用）、expression（指令绑定的表达式字符串）、arg（传给指令的参数，如果有的话）、modifiers（一个包含修饰符的对象，如果有的话）
+                big(el, binding) {
+                    el.innerText = binding.value * 10;
+                },
+                // 对象式指令
+                // 对象式指令可以定义多个钩子函数，分别在指令绑定到元素上、元素插入到DOM中、指令所在模板被重新解析时等不同阶段被调用
+                fbind: {
+                    bind(element, binding) {
+                        console.log("bind");
+                        element.value = binding.value;
+                    },
+                    inserted(element, binding) {
+                        console.log("inserted");
+                        element.focus();
+                    },
+                    update(element, binding) {
+                        console.log("update");
+                        element.value = binding.value;
+                    }
+                }
+            },
+        })
+        // 全局指令
+        // Vue.directive('focus', {
+        //     inserted(el) {
+        //         el.focus();
+        //     }
+        // })
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>键盘事件</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>你好，{{ name }}</h2>
+        <!-- @keyup.enter：监听回车键按下事件 上下左右，删除(Delete)，esc，空格(space)，换行(tab 特殊必须配合keydown) -->
+        <!-- @keyup.ctrl.enter：监听Ctrl+回车键按下事件 -->
+
+        <!-- 特殊ctrl,alt,win,shift :配合keydown正常使用，配合keyup需要按下其他按键 -->
+        <input type="text" name="" value="" placeholder="按下回车键触发事件" @keyup.enter="handleKeydown1">
+
+        <!-- Vue.config.keyCodes.自定义键名 = 键码 定制按键别名 -->
+    </div>
+    <script>
+        Vue.config.keyCodes.huiche = 13; // 定义回车键别名
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: 'Vue',
+                }
+            },
+            methods: {
+                handleKeydown1(e) {
+                    console.log(e.key, e.keyCode);
+                    console.log(e.target.value); // 获取输入框的值
+                },
+            }
+        });
+    </script>
+</body>
+</html>

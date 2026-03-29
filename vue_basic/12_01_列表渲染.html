@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 遍历数组 -->
+        <ul>
+            <li v-for="(item, index) in list" :key="item.id">
+                {{ item.n }}-{{ item.name }}-{{ index }}
+            </li>
+        </ul>
+        <!-- 遍历对象 -->
+        <ul>
+            <li v-for="(value, key) in car" :key="key">
+                {{ key }}: {{ value }}
+            </li>
+        </ul>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                list: [
+                    { name: 'Angular', id: 1, n: "001" },
+                    { name: 'React', id: 2, n: "002" },
+                    { name: 'Vue', id: 3, n: "003" }
+                ],
+                car: {
+                    name: 'BMW',
+                    price: 100000
+                }
+            }
+        })
+    </script>
+</body>
+</html>

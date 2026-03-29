@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>显示格式化后的时间</h2>
+        <h3>现在是：{{ time }}</h3>
+        <!-- 计算属性实现时间格式化 -->
+        <h3>现在是：{{ formatTime }}</h3>
+        <!-- 方法实现时间格式化 -->
+        <h3>现在是：{{ getFormatTime() }}</h3>
+        <!-- 过滤器实现时间格式化 -->
+        <h3>现在是：{{ time | formatTime }}</h3>
+        <!-- 过滤器可以传参以及串联使用 -->
+        <h3>现在是：{{ time | formatTime('YYYY年MM月DD日') }}</h3>
+        <h3>现在是：{{ time | formatTime('YYYY年MM月DD日') | mySlice }}</h3>
+    </div>
+
+    <div id="root2">
+        <!-- 过滤器可以用在插值语法和v-bind -->
+        <h2>{{msg | filter}}</h2>
+        <h2 :x="msg | filter"></h2>
+    </div>
+    <script>
+        // 全局过滤器
+        Vue.filter('filter', function (value) {
+            return value.slice(0, 4);
+        });
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    time: '1774419425340'
+                }
+            },
+            computed: {
+                // 计算属性实现时间格式化
+                formatTime() {
+                    return dayjs(Number(this.time)).format('YYYY-MM-DD HH:mm:ss');
+                }
+            },
+            methods: {
+                getFormatTime() {
+                    return dayjs(Number(this.time)).format('YYYY-MM-DD HH:mm:ss');
+                }
+            },
+            filters: {
+                // 局部过滤器
+                // 定义一个过滤器，参数是要格式化的时间字符串
+                formatTime(value, str = 'YYYY-MM-DD HH:mm:ss') {
+                    console.log("@", value);
+                    return dayjs(Number(value)).format(str);
+                },
+                mySlice(value) {
+                    return value.slice(0, 4);
+                }
+            }
+        })
+
+        const app = new Vue({
+            el: '#root2',
+            data() {
+                return {
+                    msg: 'Hello, Vue.js!'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

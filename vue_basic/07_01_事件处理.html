@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>你好，{{ name }}</h1>
+        <!-- 事件处理 -->
+        <!-- <button v-on:click="handleClick">点击我提示信息</button> -->
+        <!-- 事件处理的简写 -->
+        <button @click="handleClick1">点击我提示信息1</button>
+        <!-- 事件处理的简写 -->
+        <!-- $event占位符 -->
+        <button @click="handleClick2(666,$event)">点击我提示信息2</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: 'Vue',
+                }
+            },
+            methods: {
+                handleClick1(a) {
+                    alert('按钮1被点击了！');
+                    console.log(a.target.innerText); // 事件对象
+                    console.log(this); // Vue实例
+                },
+                handleClick2(num, a) {
+                    alert('按钮2被点击了！');
+                    console.log(num, a);   // 接收到参数666
+                },
+            }
+        });
+    </script>
+</body>
+</html>

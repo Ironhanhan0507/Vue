@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>04_el与data</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>
+            {{ message }}
+        </h1>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        const app = new Vue({
+            // el的值可以在实例创建时指定，也可以在之后通过调用 $mount 方法来指定。
+            // el: '#root',
+
+            // data的第一种写法
+            // data: {
+            //     message: 'Hello Vue!'
+            // }
+
+            // data的第二种写法 函数式(this指向实例) 使用组件时必须使用函数式写法且不能写箭头函数
+            data() {
+                return {
+                    message: 'Hello Vue!'
+                }
+            }
+        });
+        console.log(app);
+
+        // el的值可以在实例创建时指定，也可以在之后通过调用 $mount 方法来指定。
+        // el: '#root',
+        setTimeout(() => {
+            app.$mount('#root');
+        }, 2000);
+    </script>
+</body>
+</html>

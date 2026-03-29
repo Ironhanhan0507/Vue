@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1 :style="{ opacity }">{{ message }}</h1>
+        <h2>当前的n值是：{{ n }}</h2>
+        <button @click="add">n+1</button>
+        <button @click="destroy">销毁vm</button>
+        <button @click="stop">点我停止变换</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    message: 'Hello, Vue.js!',
+                    opacity: 1,
+                    n: 1
+                }
+            },
+            methods: {
+                add() {
+                    this.n += 1;
+                },
+                destroy() {
+                    // 销毁Vue实例，触发beforeDestroy和destroyed生命周期钩子函数(自杀)
+                    this.$destroy();
+                },
+                stop() {
+                    // 停止变换销毁vm实例，但是定时器仍在运行，会导致报错，因为定时器中的回调函数仍然在访问已经被销毁的vm实例(this)，所以需要在beforeDestroy钩子函数中清除定时器
+                    this.$destroy();
+
+                }
+            },
+            // 生命周期钩子函数中的this指向vm或者组件实例
+
+            // 数据代理和事件监听等功能都还没有被初始化，不能访问data中的数据和methods中的方法
+            beforeCreate() {
+                console.log('beforeCreate');
+            },
+            // 数据代理和事件监听等功能已经被初始化，可以通过vm(this)访问data中的数据和methods中的方法
+            created() {
+                console.log('created');
+            },
+            // 模板解析完成，但还没有把真实DOM插入页面，不能访问$el属性
+            beforeMount() {
+                console.log('beforeMount');
+            },
+            // 完成模板解析并把真实DOM插入页面后调用(只调用一次) 挂载完毕
+            // 在这个阶段，数据已经被绑定到视图上，可以访问$el属性，并且可以进行DOM操作
+            mounted() {
+                this.timer = setInterval(() => {
+                    vm.opacity -= 0.01;
+                    if (vm.opacity <= 0) {
+                        vm.opacity = 1;
+                    }
+                }, 16);
+                // console.log('mounted');
+            },
+            // 数据更新时调用，发生在虚拟DOM重新渲染和打补丁之前，可以在这个阶段访问更新前的DOM状态
+            // 在这个阶段，可以访问更新前的DOM状态，但不能访问更新后的DOM状态，因为更新后的DOM还没有被渲染到页面上(数据是新的，但DOM还没有更新)
+            beforeUpdate() {
+                // console.log('beforeUpdate');
+            },
+            // 随着数据更新 Model-View更新，虚拟DOM重新渲染和打补丁之后调用，可以在这个阶段访问更新后的DOM状态
+            // 数据更新后调用，发生在虚拟DOM重新渲染和打补丁之后，可以在这个阶段访问更新后的DOM状态
+            updated() {
+                // console.log('updated');
+            },
+            // 组件销毁前调用，在这个阶段，实例仍然完全可用，可以执行一些清理工作，比如清除定时器、取消事件监听等
+            beforeDestroy() {
+                // 清除定时器
+                clearInterval(this.timer);
+                // console.log('beforeDestroy');
+            },
+            // 组件销毁后调用，在这个阶段，Vue实例已经被销毁，所有的事件监听器和数据绑定都已经被移除，不能再访问vm(this)中的数据和方法
+            destroyed() {
+                // console.log('destroyed');
+            }
+        });
+        // 外部定时器实现
+        // setInterval(() => {
+        //     vm.opacity -= 0.01;
+        //     if (vm.opacity <= 0) {
+        //         vm.opacity = 1;
+        //     }
+        // }, 16);
+    </script>
+
+</body>
+</html>

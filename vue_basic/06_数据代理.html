@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据代理</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- Vue中的数据代理
+        通过vm实例访问数据属性时，Vue会代理这些属性到根实例上，使得我们可以直接通过vm.name来访问data中的name属性，而不需要通过vm.data.name来访问。这种代理机制使得我们在模板中可以直接使用数据属性，而不需要关心它们的具体位置。 
+        Vue通过Object.defineProperty()方法在Vue实例上定义了与data对象中属性同名的访问器属性（getter和setter），实现了数据代理。当我们访问vm.name时，实际上是访问了Vue实例上的name属性，这个属性的getter会返回data对象中的name属性的值。当我们修改vm.name时，setter会更新data对象中的name属性的值，并触发视图更新。
+        更方便地访问数据属性：通过数据代理，我们可以直接通过Vue实例访问data中的属性，而不需要通过vm.data.name的方式访问。这使得代码更加简洁和易读。
+    -->
+    <div id="root">
+        <h1>名称：{{ name }}</h1>
+        <p>地址：{{ address }}</p>
+    </div>
+    <script>
+        let num = 18
+        let person = {
+            name: 'Jack',
+            sex: '男',
+        };
+        // 使用Object.defineProperty()方法定义一个新的属性age，并设置其属性描述符
+        // Object.defineProperty(person, 'age', {
+        //     value: 18,
+        //     enumerable: true, // 可枚举
+        //     writable: true, // 可修改
+        //     configurable: true // 可删除
+        // });
+
+        Object.defineProperty(person, 'age', {
+            // get和set方法是访问器属性的特征，用于定义当 访问 或 修改 age属性时的行为。
+            get() {
+                console.log('有人读取age属性');
+                return num;
+            },
+            set(newValue) {
+                console.log('有人设置age属性');
+                num = newValue;
+            },
+        });
+
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: 'Jack',
+                    address: '北京',
+                }
+            }
+        });
+    </script>
+</body>
+</html>

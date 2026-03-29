@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非单文件组件</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 第三步：在Vue实例的模板中使用组件 -->
+        <school></school>
+        <hr>
+        <student></student>
+        <hr>
+        <hello></hello>
+    </div>
+
+    <div id="root2">
+        <hello></hello>
+    </div>
+    <script>
+        // 创建school组件
+        // 组件不用配置el选项，因为组件是一个可复用的Vue实例，不能直接挂载到某个元素上，而是需要通过模板来使用组件，所以组件的模板中不需要el选项，组件的data选项必须是一个函数，返回一个对象，这样每个组件实例就可以维护一份独立的数据，避免了数据共享的问题
+        // data选项必须是一个函数，返回一个对象，这样每个组件实例就可以维护一份独立的数据，避免了数据共享的问题
+        const school = Vue.extend({
+            // name指定组件在开发者工具中显示的名字，name选项是可选的，如果不指定name选项，组件在开发者工具中显示的名字就是匿名组件(Anonymous Component)，如果指定了name选项，组件在开发者工具中显示的名字就是name选项的值，这样可以方便我们在开发者工具中识别组件
+            name: 'xuexiao',
+            data() {
+                return {
+                    schoolName: '清华大学',
+                    address: '北京市朝阳区'
+                }
+            },
+            template: `
+                <div>
+                    <h2>学校名称：{{ schoolName }}</h2>
+                    <h2>地址：{{ address }}</h2>
+                    <button @click="show">点我显示学校名称</button>
+                </div>
+            `,
+            methods: {
+                show() {
+                    alert(this.schoolName);
+                }
+            },
+        });
+        // 创建student组件
+        const student = Vue.extend({
+            data() {
+                return {
+                    studentName: '李四',
+                    age: 25
+                }
+            },
+            template: `
+                <div>
+                    <h2>学生名称：{{ studentName }}</h2>
+                    <h2>年龄：{{ age }}</h2>
+                </div>
+            `,
+        });
+
+        // 创建hello组件
+        const hello = Vue.extend({
+            template: `
+                <div>
+                    <h2>Hello, Vue.js!</h2>
+                </div>
+            `
+        });
+
+        // 全局注册组件
+        Vue.component('hello', hello);
+        const vm = new Vue({
+            el: '#root',
+            // 第二步：在Vue实例中注册组件(局部注册)，在Vue实例中注册组件后，组件就可以在Vue实例的模板中使用了。
+            components: {
+                school,
+                student
+            },
+        });
+
+        const vm2 = new Vue({
+            el: '#root2',
+        });
+
+    </script>
+</body>
+</html>

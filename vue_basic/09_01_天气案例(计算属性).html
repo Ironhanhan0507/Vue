@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气案例</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>{{ city }}的天气是{{ info }}</h1>
+        <button @click="changeWeather">切换天气</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    city: '北京',
+                    isRain: false
+                }
+            },
+            computed: {
+                info() {
+                    return this.isRain ? '下雨' : '晴天';
+                }
+            },
+            methods: {
+                changeWeather() {
+                    this.isRain = !this.isRain;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
