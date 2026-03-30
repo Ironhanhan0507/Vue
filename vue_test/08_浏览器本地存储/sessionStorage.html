@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+</head>
+<body>
+    <h2>sessionStorage</h2>
+    <button onclick="saveData()">点我存储数据</button>
+    <button onclick="readData()">点我读取数据</button>
+    <button onclick="deleteData()">点我删除数据</button>
+    <script>
+        let p = {
+            name: '张三',
+            age: 18
+        }
+        function saveData() {
+            sessionStorage.setItem('name', '李四');
+            sessionStorage.setItem('age', '19');
+            sessionStorage.setItem('person', JSON.stringify(p));
+            alert('数据已存储到sessionStorage中');
+        }
+        function readData() {
+            let name = sessionStorage.getItem('name');
+            let age = sessionStorage.getItem('age');
+            let person = JSON.parse(sessionStorage.getItem('person'));
+            alert(`姓名: ${name}, 年龄: ${age}, 个人信息: ${JSON.stringify(person)}`);
+        }
+        function deleteData() {
+            sessionStorage.removeItem('name');
+            sessionStorage.removeItem('age');
+            sessionStorage.removeItem('person');
+            alert('数据已从sessionStorage中删除');
+        }
+    </script>
+</body>
+</html>

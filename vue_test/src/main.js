@@ -1,10 +1,17 @@
-import Vue from "vue"; //引入Vue
-import App from "./App.vue"; // 引入App组件 所有组件的父组件
+//引入Vue
+import Vue from 'vue'
+//引入App
+import App from './App.vue'
+//关闭Vue的生产提示
+Vue.config.productionTip = false
 
-Vue.config.productionTip = false;
-
-// 创建vm
+//创建vm
 new Vue({
-	el: "#app",
-	render: h => h(App), //将App组件放入容器中
-});
+	el:'#app',
+	render: h => h(App),
+	/* mounted() {
+		setTimeout(()=>{
+			this.$destroy()
+		},3000)
+	}, */
+})
