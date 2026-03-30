@@ -1,15 +1,33 @@
 <template>
-	<div class="todo-footer">
+	<div class="todo-footer" v-show="todoList.length">
 		<label>
-			<input type="checkbox" />
+			<input type="checkbox" :checked="isAll" @change="CheckAll" />
 		</label>
-		<span> <span>已完成0</span> / 全部2 </span>
-		<button class="btn btn-danger">清除已完成任务</button>
+		<span>
+			<span>已完成{{ done }}</span> / 全部{{ todoList.length }}
+		</span>
+		<button class="btn btn-danger" @click="bbb">清除已完成任务</button>
 	</div>
 </template>
 
 <script>
-export default {};
+export default {
+	props: ["todoList", "aaa", "bbb"],
+	computed: {
+		done() {
+			return this.todoList.filter(todo => todo.done).length;
+		},
+		isAll() {
+			// 当已完成的数量等于全部的数量，并且全部的数量大于0时，才说明全选了
+			return this.done === this.todoList.length && this.todoList.length > 0;
+		},
+	},
+	methods: {
+		CheckAll(e) {
+			this.aaa(e.target.checked);
+		},
+	},
+};
 </script>
 
 <style scoped>
