@@ -4,8 +4,7 @@
 			<div class="todo-wrap">
 				<!-- 绑定一个名为receive的自定义事件将MyHeader组件中的数据传给App组件 -->
 				<MyHeader @receive="addTodo"></MyHeader>
-				<!-- <MyList :todoList="todoList" :abc="checkTodo" :def="deleteTodo"></MyList> -->
-				<MyList :todoList="todoList"></MyList>
+				<MyList :todoList="todoList" :abc="checkTodo" :def="deleteTodo"></MyList>
 				<MyFooter :todoList="todoList" @checkAllTodo="checkAllTodo" @clearAllTodo="clearAllTodo"></MyFooter>
 			</div>
 		</div>
@@ -13,7 +12,6 @@
 </template>
 
 <script>
-import pubsub from "pubsub-js";
 import MyHeader from "./components/MyHeader.vue";
 import MyFooter from "./components/MyFooter.vue";
 import MyList from "./components/MyList.vue";
@@ -70,17 +68,8 @@ export default {
 				todo.done = done;
 			});
 		},
-		// 清除已完成任务
 		clearAllTodo() {
 			this.todoList = this.todoList.filter(todo => !todo.done);
-		},
-		// 编辑
-		editTodo(id, title) {
-			this.todoList.forEach(todo => {
-				if (todo.id === id) {
-					todo.title = title;
-				}
-			});
 		},
 	},
 	watch: {
@@ -90,18 +79,6 @@ export default {
 			},
 			deep: true,
 		},
-	},
-	mounted() {
-		// 组件挂载完成后获取本地存储的数据并存储在data中
-		this.$bus.$on("checkTodo", this.checkTodo);
-		this.pubId = pubsub.subscribe("deleteTodo", (_, id) => {
-			this.deleteTodo(id);
-		});
-		this.$bus.$on("editTodo", this.editTodo);
-	},
-	beforedestroy() {
-		this.$bus.$off("checkTodo", this.checkTodo);
-		pubsub.unsubscribe(this.pubId);
 	},
 };
 </script>
@@ -129,12 +106,6 @@ body {
 	color: #fff;
 	background-color: #da4f49;
 	border: 1px solid #bd362f;
-}
-.btn-edit {
-	color: #fff;
-	background-color: skyblue;
-	border: 1px solid skyblue;
-	margin-right: 5px;
 }
 
 .btn-danger:hover {

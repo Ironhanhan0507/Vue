@@ -18,12 +18,17 @@ export default {
 				done: false,
 			};
 			// 通过父组件传过来的方法将数据传给父组件
-			this.receive(todo);
+			// this.receive(todo);
+
+			// 通过$emit触发事件
+			this.$emit("receive", todo);
+
 			// 清空输入框
 			input.value = "";
 		},
 	},
-	props: ["receive"],
+	// 通过自定义事件不需要用props接收
+	// props: ["receive"],
 };
 </script>
 

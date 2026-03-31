@@ -2,9 +2,11 @@
 	<div id="root">
 		<div class="todo-container">
 			<div class="todo-wrap">
-				<MyHeader :receive="addTodo"></MyHeader>
-				<MyList :todoList="todoList" :abc="checkTodo" :def="deleteTodo"></MyList>
-				<MyFooter :todoList="todoList" :aaa="checkAllTodo" :bbb="clearAllTodo"></MyFooter>
+				<!-- 绑定一个名为receive的自定义事件将MyHeader组件中的数据传给App组件 -->
+				<MyHeader @receive="addTodo"></MyHeader>
+				<!-- <MyList :todoList="todoList" :abc="checkTodo" :def="deleteTodo"></MyList> -->
+				<MyList :todoList="todoList"></MyList>
+				<MyFooter :todoList="todoList" @checkAllTodo="checkAllTodo" @clearAllTodo="clearAllTodo"></MyFooter>
 			</div>
 		</div>
 	</div>
@@ -78,6 +80,11 @@ export default {
 			},
 			deep: true,
 		},
+	},
+	mounted() {
+		// 组件挂载完成后获取本地存储的数据并存储在data中
+		this.$bus.$on("checkTodo", this.checkTodo);
+		this.$bus.$on("deleteTodo", this.deleteTodo);
 	},
 };
 </script>

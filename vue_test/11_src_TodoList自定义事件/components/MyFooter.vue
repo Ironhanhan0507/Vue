@@ -6,13 +6,13 @@
 		<span>
 			<span>已完成{{ done }}</span> / 全部{{ todoList.length }}
 		</span>
-		<button class="btn btn-danger" @click="bbb">清除已完成任务</button>
+		<button class="btn btn-danger" @click="clearAll">清除已完成任务</button>
 	</div>
 </template>
 
 <script>
 export default {
-	props: ["todoList", "aaa", "bbb"],
+	props: ["todoList"],
 	computed: {
 		done() {
 			return this.todoList.filter(todo => todo.done).length;
@@ -24,7 +24,12 @@ export default {
 	},
 	methods: {
 		CheckAll(e) {
-			this.aaa(e.target.checked);
+			// this.aaa(e.target.checked);
+			this.$emit("checkAllTodo", e.target.checked);
+		},
+		clearAll() {
+			// this.bbb();
+			this.$emit("clearAllTodo");
 		},
 	},
 };
