@@ -4,7 +4,7 @@
 		<!-- 父组件给子组件传递函数类型的props实现：子给父传递数据 -->
 		<school :getSchoolName="getSchoolName" />
 
-		<!-- 父组件给子组件绑定自定义事件(fn)：子给父传递数据 -->
+		<!-- 父组件给子组件绑定名为fn的自定义事件：子给父传递数据 -->
 		<student v-on:fn="getStudentName" />
 
 		<!-- 通过ref访问子组件实例绑定事件 -->
