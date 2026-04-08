@@ -1,0 +1,35 @@
+<template>
+	<div>
+		<ul>
+			<li v-for="m in messageList" :key="m.id">
+				<!-- 携带参数to的字符串写法 -->
+				<!-- <router-link :to="`/home/message/detail?id=${m.id}&title=${m.title}`">{{ m.title }}</router-link> -->
+				&nbsp;&nbsp;
+
+				<!-- 携带参数to的对象写法 -->
+				<!-- <router-link :to="{ path: '/home/message/detail', query: { id: m.id, title: m.title } }">{{ m.title }}</router-link> -->
+				<!-- 命名路由简写 -->
+				<router-link :to="{ name: 'xiaoxi', query: { id: m.id, title: m.title } }">{{ m.title }}</router-link>
+			</li>
+		</ul>
+		<hr />
+		<router-view></router-view>
+	</div>
+</template>
+
+<script>
+export default {
+	name: "MyMessage",
+	data() {
+		return {
+			messageList: [
+				{ id: "001", title: "message001" },
+				{ id: "002", title: "message002" },
+				{ id: "003", title: "message003" },
+			],
+		};
+	},
+};
+</script>
+
+<style></style>
