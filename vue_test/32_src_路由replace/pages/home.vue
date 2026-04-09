@@ -10,10 +10,7 @@
 					<router-link class="list-group-item" active-class="active" to="/home/message">Message</router-link>
 				</li>
 			</ul>
-			<!-- 保持被切换的组件不被销毁 -->
-			<keep-alive include="MyNews">
-				<router-view></router-view>
-			</keep-alive>
+			<router-view></router-view>
 		</div>
 	</div>
 </template>

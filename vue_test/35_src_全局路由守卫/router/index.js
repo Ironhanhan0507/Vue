@@ -24,19 +24,6 @@ const router = new VueRouter({
 					path: "news",
 					component: MyNews,
 					meta: { isAuth: true }, // 通过meta属性给路由添加额外的信息
-					beforeEnter: (to, from, next) => {
-						// 独享路由守卫
-						if (to.meta.isAuth) {
-							// 判断是否需要鉴权
-							if (localStorage.getItem("school") === "北京大学") {
-								next();
-							} else {
-								alert("没有权限查看");
-							}
-						} else {
-							next();
-						}
-					},
 				},
 				{
 					path: "message",
@@ -67,18 +54,18 @@ const router = new VueRouter({
 });
 
 // 全局前置路由守卫 (在路由跳转开始前和初始化时被调用)
-// router.beforeEach((to, from, next) => {
-// 	if (to.meta.isAuth) {
-// 		// 判断是否需要鉴权
-// 		if (localStorage.getItem("school") === "北京大学") {
-// 			next();
-// 		} else {
-// 			alert("没有权限查看");
-// 		}
-// 	} else {
-// 		next();
-// 	}
-// });
+router.beforeEach((to, from, next) => {
+	if (to.meta.isAuth) {
+		// 判断是否需要鉴权
+		if (localStorage.getItem("school") === "北京大学") {
+			next();
+		} else {
+			alert("没有权限查看");
+		}
+	} else {
+		next();
+	}
+});
 
 // 全局后置路由守卫 (在路由跳转结束后和初始化时被调用)
 // router.afterEach((to, from) => {});

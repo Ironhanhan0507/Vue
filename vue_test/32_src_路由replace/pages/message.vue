@@ -13,8 +13,6 @@
 				<!-- <router-link :to="`/home/message/detail/${m.id}/${m.title}`">{{ m.title }}</router-link> -->
 				<!-- 携带params参数to的对象写法 (必须使用命名路由name) -->
 				<router-link :to="{ name: 'xiaoxi', params: { id: m.id, title: m.title } }">{{ m.title }}</router-link>
-				<button @click="pushShow">push查看</button>
-				<button @click="replaceShow">replace查看</button>
 			</li>
 		</ul>
 		<hr />
@@ -33,16 +31,6 @@ export default {
 				{ id: "003", title: "message003" },
 			],
 		};
-	},
-	methods: {
-		pushShow(m) {
-			// 编程式路由导航 push
-			this.$router.push({ name: "xiaoxi", query: { id: m.id, title: m.title } });
-		},
-		replaceShow(m) {
-			// 编程式路由导航 replace
-			this.$router.replace({ name: "xiaoxi", query: { id: m.id, title: m.title } });
-		},
 	},
 };
 </script>
