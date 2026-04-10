@@ -1,35 +1,21 @@
 <template>
 	<div>
-		<MyBanner></MyBanner>
-		<div class="row">
-			<div class="col-xs-2 col-xs-offset-2">
-				<div class="list-group">
-					<!-- <a class="list-group-item active" href="./about.html">About</a> -->
-					<!-- <a class="list-group-item" href="./home.html">Home</a> -->
-
-					<!-- 路由链接 router-link标签  -->
-					<!-- replace 属性用于控制路由跳转时是否替换当前历史记录 -->
-					<router-link replace class="list-group-item" active-class="active" to="/about">About</router-link>
-					<router-link replace class="list-group-item" active-class="active" to="/home">Home</router-link>
-				</div>
-			</div>
-			<div class="col-xs-6">
-				<div class="panel">
-					<div class="panel-body">
-						<!-- <h2>我是About的内容</h2> -->
-						<!-- 指定组件的呈现位置 -->
-						<router-view></router-view>
-					</div>
-				</div>
-			</div>
-		</div>
+		<button>原生按钮</button>
+		<input type="text" />
+		<el-row>
+			<el-button>默认按钮</el-button>
+			<el-button type="primary">主要按钮</el-button>
+			<el-button type="success">成功按钮</el-button>
+			<el-button type="info">信息按钮</el-button>
+			<el-button type="warning">警告按钮</el-button>
+			<el-button type="danger">危险按钮</el-button>
+		</el-row>
+		<el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
 	</div>
 </template>
 
 <script>
-import MyBanner from "./components/banner.vue";
 export default {
-	components: { MyBanner },
 	name: "App",
 };
 </script>

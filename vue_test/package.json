@@ -11,6 +11,7 @@
     "animate.css": "^4.1.1",
     "axios": "^1.14.0",
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.14",
     "nanoid": "^5.1.7",
     "pubsub-js": "^1.9.5",
     "vue": "^2.6.14",
